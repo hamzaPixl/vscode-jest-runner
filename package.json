@@ -66,6 +66,12 @@
             "description": "Define an alternative Jest command (e.g. for Create React App and similar abstractions)",
             "scope": "window"
           },
+          "jestrunner.jestCommandArgs": {
+            "type": "string",
+            "default": "",
+            "description": "Define an arguments before applying Jest command (e.g. NODE_ENV_CONFIG=./config)",
+            "scope": "window"
+          },
           "jestrunner.disableCodeLens": {
             "type": "boolean",
             "default": false,

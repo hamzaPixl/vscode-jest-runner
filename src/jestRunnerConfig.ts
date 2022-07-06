@@ -4,11 +4,17 @@ import * as vscode from 'vscode';
 import { normalizePath, quote, validateCodeLensOptions, CodeLensOption, isNodeExecuteAbleFile } from './util';
 
 export class JestRunnerConfig {
+  public get jestCommandArgs(): string {
+    const jestCommandArgs: string = vscode.workspace.getConfiguration().get('jestrunner.jestCommandArgs');
+    return jestCommandArgs || '';
+  }
+
   /**
    * The command that runs jest.
    * Defaults to: node "node_modules/.bin/jest"
    */
   public get jestCommand(): string {
+    const args = this.jestCommandArgs;
     // custom
     const jestCommand: string = vscode.workspace.getConfiguration().get('jestrunner.jestCommand');
     if (jestCommand) {
@@ -17,9 +23,9 @@ export class JestRunnerConfig {
 
     // default
     if (this.isYarnPnpSupportEnabled) {
-      return `yarn jest`;
+      return `${args} yarn jest`;
     }
-    return `node ${quote(this.jestBinPath)}`;
+    return `${args} node ${quote(this.jestBinPath)}`;
   }
 
   public get changeDirectoryToWorkspaceRoot(): boolean {
