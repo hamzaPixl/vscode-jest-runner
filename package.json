@@ -67,7 +67,7 @@
             "scope": "window"
           },
           "jestrunner.jestCommandArgs": {
-            "type": "string",
+            "type": "boolean",
             "default": "",
             "description": "Define an arguments before applying Jest command (e.g. NODE_ENV_CONFIG=./config)",
             "scope": "window"

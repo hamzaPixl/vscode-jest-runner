@@ -5,8 +5,17 @@ import { normalizePath, quote, validateCodeLensOptions, CodeLensOption, isNodeEx
 
 export class JestRunnerConfig {
   public get jestCommandArgs(): string {
-    const jestCommandArgs: string = vscode.workspace.getConfiguration().get('jestrunner.jestCommandArgs');
-    return jestCommandArgs || '';
+    const jestCommandArgs: boolean = vscode.workspace.getConfiguration().get('jestrunner.jestCommandArgs');
+    if (!jestCommandArgs) {
+      return '';
+    }
+    let folder: string = path.dirname(vscode.window.activeTextEditor.document.fileName);
+    while (!fs.existsSync(path.join(folder, 'config'))) {
+      folder = path.dirname(folder);
+    }
+    const paths = folder.split('/');
+    folder = paths.slice(paths.length - 2, paths.length).join('/');
+    return `NODE_CONFIG_DIR=./${folder}/config`;
   }
 
   /**
